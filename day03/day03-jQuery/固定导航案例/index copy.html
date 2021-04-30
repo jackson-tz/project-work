@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0
+    }
+
+    img {
+      vertical-align: top;
+    }
+
+    .main {
+      margin: 0 auto;
+      width: 1000px;
+      padding-top: 10px;
+    }
+
+    .fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+  </style>
+  <script src="jquery-1.12.4.js"></script>
+  <script>
+    $(function () {
+      //当页面滚动的距离到达topPart的高度时，给navBar加一个固定定位，且让mainPart还能继续滚动
+      //当页面滚动的距离小于topPart的高度时，去掉navBar的固定定位
+      //监听页面滚动事件
+      $(window).scroll(function () {
+        //获取页面滚动的距离，和topPart的高度
+        var topHeight = $("#topPart").height()
+        var location = $(window).scrollTop()
+        if (location >= topHeight) {
+          $("#navBar").addClass("fixed")
+          $("#mainPart").css({
+            marginTop: $("#navBar").height()
+          })
+        } else{
+          $("#navBar").removeClass("fixed")
+          $("#mainPart").css({
+            marginTop: 0
+          })
+        }
+      })
+    });
+  </script>
+
+</head>
+
+<body>
+  <div class="top" id="topPart">
+    <img src="images/top.png" alt="" />
+  </div>
+  <div class="nav" id="navBar">
+    <img src="images/nav.png" alt="" />
+  </div>
+  <div class="main" id="mainPart">
+    <img src="images/main.png" alt="" />
+  </div>
+</body>
+
+</html>

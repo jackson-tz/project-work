@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let {log} = console;
+        class Person {
+            constructor(name , age){
+                this.name = name;
+                this.age = age;
+            }
+            sayHi (){
+                console.log("大家好我叫" + this.name)
+            }
+        }
+
+        class Student extends Person{
+            constructor(name , age , score){
+                super(name , age);
+                this.score = score;
+            }
+        }
+
+        let p1 = new Person("Bob", 19);
+        let st1 = new Student("Tom", 20, 100);
+        log(p1);
+        log(st1);
+        p1.sayHi();
+        st1.sayHi();
+        log(Person.prototype.constructor)
+        log(Student.prototype.constructor)
+    </script>
+</body>
+</html>

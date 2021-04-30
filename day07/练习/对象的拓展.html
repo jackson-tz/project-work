@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 对象的属性可以简写：当属性名和值相同时name：name => name   当属性值为函数时do: function(){} => do(){}
+        let {log} = console;
+        let obj = {
+            name,
+            do(){
+                console.log(1)
+            }
+        }
+        obj.do() // 1
+
+        //字面量对象时，属性可以动态设置
+        let a = "name";
+        let b = "age";
+        let obj1 = {
+            [a] : "Bob",
+            [b+1] : 20,
+        }
+        log(obj1[a])
+        log(obj1[b+1]) 
+
+        // Object.is：方法，可以判断NaN是否相等
+        log(Object.is(1,1)) // true
+        log(Object.is({},{})) // false
+        log(Object.is(NaN,NaN)) // true
+        log(NaN === NaN) // false
+        log(Object.is(Infinity,Infinity)) // true
+
+        // 合并方法；Object.assign
+        let obj2 = {x : 1}
+        let obj3 = {y : 2}
+        let obj4 = {z : 3}
+        let newObj = Object.assign(obj2,obj3,obj4)
+        let newObj1 = {...obj2,...obj3,...obj4}
+        log(newObj)
+        log(newObj1)
+    </script>
+</body>
+</html>

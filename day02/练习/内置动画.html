@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box{
+            width: 300px;
+            height: 300px;
+            background-color: pink;
+        }
+    </style>
+</head>
+<body>
+    <button id="btn-show">show</button>
+    <button id="btn-hide">hide</button>
+    <button id="btn-toggle">toggle</button>
+
+    <button id="btn-fadein">fadein</button>
+    <button id="btn-fadeout">fadeout</button>
+    <button id="btn-fadetoggle">fadetoggle</button>
+
+    <button id="btn-slideUp">slideUp</button>
+    <button id="btn-slideDown">slideDown</button>
+    <button id="btn-slideToggle">slideToggle</button>
+    <div id="box"></div>
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        $(function(){
+            //显示效果
+           $("#btn-show").click(function(){
+               $("#box").show(3000)
+           })
+           //隐藏效果
+           $("#btn-hide").click(function(){
+               $("#box").hide(3000)
+           })
+           //如果显示就执行隐藏效果，如果不显示就执行显示效果
+           $("#btn-toggle").click(function(){
+               $("#box").toggle(3000)
+           })
+           //淡入效果
+           $("#btn-fadein").click(function(){
+               $("#box").fadeIn(3000)
+           })
+           //淡出效果
+           $("#btn-fadeout").click(function(){
+               $("#box").fadeOut(3000)
+           })
+           //如果显示就执行淡出效果，如果不显示就执行淡入效果
+           $("#btn-fadetoggle").click(function(){
+               $("#box").fadeToggle(3000)
+           })
+           $("#btn-slideUp").click(function(){
+               $("#box").slideUp(3000)
+           })
+           $("#btn-slideDown").click(function(){
+               $("#box").slideDown(3000)
+           })
+           $("#btn-slideToggle").click(function(){
+               $("#box").slideToggle(3000)
+           })
+        })
+    </script>
+</body>
+</html>

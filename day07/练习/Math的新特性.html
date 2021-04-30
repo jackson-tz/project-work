@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        let {log} = console;
+        // es5的方法：Math.pow 方法：求一个数的幂次方 ； es6的方法：a**b
+        log(Math.pow(2,10)); // 1024
+        log(2**10); // 1024
+
+        // 书写进制数：二进制：0b   八进制：0o ...
+        log(0b000001111) // 15;
+        //八进制之前的书写方式为017，但在严格模式下会报错
+        // log(017) // 15 严格模式下报错
+        log(0o17) // 15;
+
+        // Math.trunc() 去除小数部分
+        log(Math.trunc(3.14159265)) // 3
+        log(Math.trunc(1.41421)) // 1
+
+        // Math.sign()方法：判断一个数是正数、负数、NAN
+        // 如果是正数则返回1，负数返回-1，NAN返回NAN
+        log(Math.sign(123)) // 1
+        log(Math.sign(-123)) // -1
+        log(Math.sign(NaN)) // NaN
+        log(Math.sign(Infinity)) // 1
+
+        //Math.sqrt(): 开平方   Math.cbrt()：开立方
+
+        log(Math.sqrt(4)); // 2
+        log(Math.cbrt(27)); // 3
+
+        
+
+    </script>
+</body>
+</html>

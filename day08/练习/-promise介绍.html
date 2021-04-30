@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+            promise：
+                    - 是一个构造函数，有三种方法：all、resolve、reject,原型上有then、catch方法
+                        - 调用resolve()方法，可以把promise的未定义状态(pending)修改为成功状态(resolved)
+                        - 调用reject()方法，可以把promise的未定义状态(pending)修改为错误状态(rejected)
+                    - promise构造函数接收一个参数,参数为一个函数,它有两个参数(resolve , reject)
+                    - promise有三中状态：未定义状态（pending）、成功状态（resolved）、错误状态（rejected）
+                    - promise的状态只能修改一次
+        */
+
+
+       /*  let promise1 = new Promise(function(resolve , reject){
+            // 同步代码
+            console.log(1)
+                 // 异步代码
+                setTimeout(() => {
+                    console.log(3)
+                },1000)
+        })
+        console.log(2)
+        console.log(promise1) // promise的状态未改变，为初始状态pending */
+
+        /* let promise2 = new Promise(function(resolve , reject){
+
+            setTimeout(()=>{
+                console.log(4);
+                resolve("a数据")// promise的状态改变为成功状态
+            },1000)
+        })
+        console.log(promise2) */
+
+        let promise3 = new Promise(function(resolve , reject){
+
+            setTimeout(() =>{
+                console.log(5);
+                reject("失败状态")// 会报错promise的状态被改为失败状态
+            },1000)
+        })
+        console.log(promise3)
+
+    </script>
+</body>
+</html>

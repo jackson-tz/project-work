@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="checkDemo.css" />
+  <script src="jquery-1.12.4.js"></script>
+  <script>
+    $(function () {
+      //需求一：当点击j_btnAddData按钮，让j_mask和j_formAdd显示
+      $("#j_btnAddData").click(function () {
+        $("#j_mask").show()
+        $("#j_formAdd").show()
+      })
+
+      //需求二：当点击添加按钮j_btnAdd，获取课程j_txtLesson和学院j_txtBelSch的值，并动态创建相对应的tr、td标签插入到j_tb中
+      $("#j_btnAdd").click(function () {
+        //获取课程j_txtLesson和学院j_txtBelSch的值，并去掉两边的空格
+        var lesson = $("#j_txtLesson").val().trim()
+        var belsch = $("#j_txtBelSch").val().trim()
+        //判断输入的值是否为字符串或空，若是，则return
+        if (!lesson || !belsch) {
+          alert("请输入正确的课程和学院名称")
+          return;
+        }
+        var arr = [];
+        arr.push("<tr>");
+        arr.push("<td>" + lesson + "</td>")
+        arr.push("<td>" + belsch + "</td>")
+        arr.push('<td><a href="javascript:;" class="get">GET</a></td>')
+        arr.push("</tr>")
+        
+        $("#j_tb").append(arr.join())
+
+          //点击添加后让j_mask和j_formAdd隐藏
+          $("#j_mask").hide()
+          $("#j_formAdd").hide()
+
+          //添加后删除课程j_txtLesson和学院j_txtBelSch的值
+          var lesson = $("#j_txtLesson").val("")
+          var belsch = $("#j_txtBelSch").val("")
+      })
+
+      //需求三：当不想添加的时候，点击按钮j_hideFormAdd时让j_mask和j_formAdd隐藏
+      $("#j_hideFormAdd").click(function(){
+        $("#j_mask").hide()
+        $("#j_formAdd").hide()
+        //退出后删除课程j_txtLesson和学院j_txtBelSch的值
+        var lesson = $("#j_txtLesson").val("")
+          var belsch = $("#j_txtBelSch").val("")
+      })
+
+      //当一个学科可学完后，点击.get按钮时，让它对应的tr删除，利用事件委托的方法来绑定事件，这样就能把后面添加的元素添加点击事件
+      $("#j_tb").click(function(e){
+        console.log($(this).find('a')[0].nodeName)
+        console.log(e.target.nodeName)
+        console.log(e)
+        console.log(e.target)
+        if(e.target.nodeName === $(this).find('a')[0].nodeName){
+          $(e.target).parent().parent().remove()
+        }
+      })
+
+    });
+  </script>
+</head>
+
+<body>
+  <div class="wrap">
+    <div>
+      <input type="button" value="添加数据" id="j_btnAddData" class="btnAdd" />
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>课程名称</th>
+          <th>所属学院</th>
+          <th>已学会</th>
+        </tr>
+      </thead>
+      <tbody id="j_tb">
+        <tr>
+          <td>JavaScript</td>
+          <td>前端学院</td>
+          <td><a href="javascript:;" class="get">GET</a></td>
+        </tr>
+        <tr>
+          <td>css</td>
+          <td>前端学院</td>
+          <td><a href="javascript:;" class="get">GET</a></td>
+        </tr>
+        <tr>
+          <td>html</td>
+          <td>前端学院</td>
+          <td><a href="javascript:;" class="get">GET</a></td>
+        </tr>
+        <tr>
+          <td>jQuery</td>
+          <td>前端学院</td>
+          <td><a href="javascript:;" class="get">GET</a></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div id="j_mask" class="mask"></div>
+  <div id="j_formAdd" class="form-add">
+    <div class="form-add-title">
+      <span>添加数据</span>
+
+      <div id="j_hideFormAdd">x</div>
+    </div>
+    <div class="form-item">
+      <label class="lb" for="j_txtLesson">课程名称：</label>
+      <input class="txt" type="text" id="j_txtLesson" placeholder="请输入课程名称">
+    </div>
+    <div class="form-item">
+      <label class="lb" for="j_txtBelSch">所属学院：</label>
+      <input class="txt" type="text" id="j_txtBelSch" placeholder="请输入所属学院">
+    </div>
+    <div class="form-submit">
+      <input type="button" value="添加" id="j_btnAdd">
+    </div>
+  </div>
+
+
+</body>
+
+</html>

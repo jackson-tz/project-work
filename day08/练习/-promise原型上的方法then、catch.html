@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        /* 
+            promise原型上打方法：then、catch
+                - then方法：捕获promise成功的状态，执行成功的回调
+                    - 有两个参数：参数一：promise成功状态下执行的代码
+                                 参数二：promise失败状态下执行的代码
+                - catch方法：捕获promise失败的状态，执行失败的回调
+                    - 注意：使用catch方法时，then的第二个参数不用写，如果非要写，则catch方法失效
+        */
+
+        let promise1 = new Promise(function(resolve , reject){
+            setTimeout(()=>{
+                console.log(1);
+                resolve("成功状态")
+                // reject("失败状态")
+            },1000)
+        })
+        promise1.then(
+            // 成功状态下执行的代码，成功的回调
+            (data)=>{
+                console.log(data);
+                console.log("111")
+            },
+            // 失败状态下执行的代码，失败的回调
+            (err)=>{
+                console.log(err);
+                console.log("222")
+            }
+        )
+
+        console.log("hhh")
+
+        // let promise2 = new Promise(function(resolve , reject){
+        //     setTimeout(()=>{
+        //         console.log(3);
+        //         // resolve("成功状态")
+        //         reject("失败状态")
+        //     },1000)
+        // })
+        // promise2.then(
+        //     // 成功状态下执行的代码，成功的回调
+        //     (data)=>{
+        //         console.log(data);
+        //         console.log("333");
+        //     },
+        //     // 失败状态下执行的代码，失败的回调
+        //     // (err)=>{
+        //     //     console.log(err);
+        //     //     console.log("222")
+        //     // }
+        // )
+        // .catch(
+        //     (err)=>{
+        //         console.log(err);
+        //         console.log("444");
+        //     }
+        // )
+
+
+    </script>
+</body>
+</html>

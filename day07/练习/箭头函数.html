@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>箭头函数</title>
+</head>
+<body>
+    <script>
+        /* 
+            箭头函数：
+                    注意：- 箭头函数没有this，如果在箭头函数里使用this，则它表示其外层函数的this
+                          - 箭头函数不能作为构造函数
+                          - 没有arguments
+ 
+        */
+        let {log} = console;
+        // 箭头函数：
+        let fn = (x) => {return x}
+        log(fn(1,2))
+
+        // 当函数传入的参数只有一个的时候，可以省略()，当没有参数时必须写(),参数大于一个时也要书写()
+        let fn1 = a => {return a}
+        log(fn1(2))
+
+        // 当{}中只有一条表达式时，{}可以省略；并且返回它的值
+        let fn2 = b => b+3;
+        log(fn2(5))
+    </script>
+</body>
+</html>

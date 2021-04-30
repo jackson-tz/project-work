@@ -1,0 +1,38 @@
+*{
+    padding: 0px;
+    margin: 0px;
+    list-style: none;
+}
+#outer{
+width: 606px;
+margin: 150px auto;
+border: 1px solid #2ba5eb;
+}
+#title{
+overflow: hidden;
+}
+#title>h3{
+width: 200px;
+border: 1px solid #ccc;
+height: 50px;
+text-align: center;
+line-height: 50px;
+color: #333;
+float: left;
+}
+#con>li{
+width: 606px;
+height: 300px;
+text-align: center;
+line-height: 300px;
+font-size: 40px;
+font-weight: bold;
+display: none;
+}
+#title>.active{
+background-color: red;
+color: #fff;
+}
+#con>.show{
+display: block;
+}

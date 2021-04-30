@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            list-style: none;
+        }
+
+        #box {
+            width: 600px;
+            height: 560px;
+            margin: 100px auto;
+            border: 1px solid black;
+        }
+
+        #title {
+            display: flex;
+        }
+
+        #title h2 {
+            width: 198px;
+            height: 60px;
+            line-height: 60px;
+            text-align: center;
+            border: 1px solid black;
+        }
+
+        #title h2.active {
+            background-color: pink;
+        }
+
+        #con li {
+            height: 500px;
+            text-align: center;
+            line-height: 500px;
+            font-size: 40px;
+            font-weight: bold;
+            display: none;
+        }
+
+        #con li.show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="../jquery-1.12.4.min.js"></script>
+    <script>
+        $(function () {
+            $("h2").click(function () {
+                var _index = $(this).index()
+                $(this)
+                    .addClass("active")
+                    .siblings()
+                    .removeClass("active")
+                    .parent()
+                    .siblings()
+                    .find("li")
+                    .eq(_index)
+                    .addClass("show")
+                    .siblings()
+                    .removeClass("show")
+            })
+        })
+    </script>
+    <div id="box">
+        <div id="title">
+            <h2 class="active">标题一</h2>
+            <h2>标题二</h2>
+            <h2>标题三</h2>
+        </div>
+        <ul id="con">
+            <li class="show">内容一</li>
+            <li>内容二</li>
+            <li>内容三</li>
+        </ul>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #box h1{
+            margin-bottom: 3px;
+        }
+        span{
+            position: relative;
+            right: -110px;
+        }
+        p{
+            position: relative;
+            right: -150px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+
+    </div>
+    <script>
+        let data = {
+            title: "我的博客",
+            name: "Bob",
+            con: "今天天气真的很好,适合敲代码",
+            date: "时间2021.4.26"
+        }
+        let oBox = document.getElementById("box");
+        oBox.innerHTML = `<h1>${data.title}</h1>
+                        <span>---${data.name}</span>
+                        <div>${data.con}</div>
+                        <p>${data.date}</p>`
+    </script>
+</body>
+
+</html>

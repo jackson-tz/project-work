@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 需求：请求a数据，再请求b数据，再请求c数据
+        function* fn(){
+            yield setTimeout(() => {
+                console.log("请求a数据");
+                it.next()
+            },1000);
+            yield setTimeout(() => {
+                console.log("请求b数据");
+                it.next()
+            },1000);
+            yield setTimeout(() => {
+                console.log("请求c数据");
+                it.next()
+            },1000)
+            console.log("数据全部请求成功了~~")
+        }
+        let it = fn()
+        it.next();
+    </script>
+</body>
+</html>

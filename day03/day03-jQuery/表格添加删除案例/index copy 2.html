@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head lang="en">
+  <meta charset="UTF-8">
+  <title></title>
+  <link rel="stylesheet" href="checkDemo.css" />
+  <script src="jquery-1.12.4.js"></script>
+</head>
+
+<body>
+  <div class="wrap">
+    <div>
+      <input type="button" value="添加数据" id="j_btnAddData" class="btnAdd" />
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>课程名称</th>
+          <th>所属学院</th>
+          <th>已学会</th>
+        </tr>
+      </thead>
+      <tbody id="j_tb">
+        <tr>
+          <td>JavaScript</td>
+          <td>前端学院</td>
+          <td><a href="javascript:;" class="get">GET</a></td>
+        </tr>
+        <tr>
+          <td>css</td>
+          <td>前端学院</td>
+          <td><a href="javascript:;" class="get">GET</a></td>
+        </tr>
+        <tr>
+          <td>html</td>
+          <td>前端学院</td>
+          <td><a href="javascript:;" class="get">GET</a></td>
+        </tr>
+        <tr>
+          <td>jQuery</td>
+          <td>前端学院</td>
+          <td><a href="javascript:;" class="get">GET</a></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+  <div id="j_mask" class="mask"></div>
+  <div id="j_formAdd" class="form-add">
+    <div class="form-add-title">
+      <span>添加数据</span>
+
+      <div id="j_hideFormAdd">x</div>
+    </div>
+    <div class="form-item">
+      <label class="lb" for="j_txtLesson">课程名称：</label>
+      <input class="txt" type="text" id="j_txtLesson" placeholder="请输入课程名称">
+    </div>
+    <div class="form-item">
+      <label class="lb" for="j_txtBelSch">所属学院：</label>
+      <input class="txt" type="text" id="j_txtBelSch" placeholder="请输入所属学院">
+    </div>
+    <div class="form-submit">
+      <input type="button" value="添加" id="j_btnAdd">
+    </div>
+  </div>
+  <script>
+    /* 
+          需求：
+              - 当点击添加数据j_btnAddData按钮时，遮罩层j_mask和j_formAdd显示
+              - 当点击添加按钮j_btnAdd时，获取课程j_txtLesson和学院j_txtBelSch的值
+                并且创建对应的tr和td，插入到j_tb中，并且隐藏遮罩层j_mask和j_formAdd
+              - 创建完成后清空课程j_txtLesson和学院j_txtBelSch的值
+              - 当用户不想添加课程时，点击j_hideFormAdd，可以隐藏遮罩层j_mask和j_formAdd，并清空课程j_txtLesson和学院j_txtBelSch的值
+              - 当要删除学科时，点击a.get时，对应的tr标签删除（利用事件委托来实现，这样后面添加的元素也能绑定事件）
+    */
+    var oJ_btnAddData = document.getElementById("j_btnAddData")
+    var oJ_mask = document.getElementById("j_mask")
+    var oJ_formAdd = document.getElementById("j_formAdd")
+    var oJ_btnAdd = document.getElementById("j_btnAdd")
+    var oJ_txtLesson = document.getElementById("j_txtLesson")
+    var oJ_txtBelSch = document.getElementById("j_txtBelSch")
+    var oJ_tb = document.getElementById("j_tb")
+    var oJ_hideFormAdd = document.getElementById("j_hideFormAdd")
+
+    oJ_btnAddData.onclick = function () {
+      oJ_mask.style.display = "block";
+      oJ_formAdd.style.display = "block";
+    }
+
+    oJ_btnAdd.onclick = function () {
+      var lesson = oJ_txtLesson.value.trim()
+      var belsch = oJ_txtBelSch.value.trim()
+
+      //需要判断是否传入的值或是否传入空字符串，当没输入值或空字符串时，则提醒用户，反之则继续执行下面代码
+      if (lesson === "" || belsch === "") {
+        alert("请输入正确的课程名和学院名")
+        return;
+      }
+      var arr = [];
+      var newtr = document.createElement("tr")
+      arr.push("<td>" + lesson + "</td>")
+      arr.push("<td>" + belsch + "</td>")
+      arr.push('<td><a href="javascript:;" class="get">GET</a></td>')
+      newtr.innerHTML = arr.join('')
+      oJ_tb.appendChild(newtr)
+
+      oJ_mask.style.display = "none";
+      oJ_formAdd.style.display = "none";
+
+      oJ_txtLesson.value = "";
+      oJ_txtBelSch.value = "";
+    }
+
+    oJ_hideFormAdd.onclick = function () {
+      oJ_mask.style.display = "none";
+      oJ_formAdd.style.display = "none";
+
+      oJ_txtLesson.value = "";
+      oJ_txtBelSch.value = "";
+    }
+
+    oJ_tb.onclick = function (e) {
+      if(e.target.nodeName.toLowerCase() === "a"){
+            e.target.parentNode.parentNode.remove()
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>

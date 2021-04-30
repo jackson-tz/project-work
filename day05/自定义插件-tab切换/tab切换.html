@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Title</title>
+  <link rel="stylesheet" href="jquery-tabCutover.css" />
+</head>
+
+<body>
+  <div id="outer">
+    <div id="title">
+      <h3 class="active">标题一</h3>
+      <h3>标题二</h3>
+      <h3>标题三</h3>
+    </div>
+    <ul id="con">
+      <li class="show">内容一</li>
+      <li>内容二</li>
+      <li>内容三</li>
+    </ul>
+  </div>
+  <!--我们封装的是jquery插件,所以要依赖jquery-->
+  <script src="jquery-1.12.4.js"></script>
+  <script src="jquery-tabCutover.js"></script>
+  <script>
+    //每一个jquery都可以调用这个方法
+
+    $('#outer').tabCutover();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+
+        /* 
+            注意: 利用getter/setter. 其实是在对象中添加了一个新的属性. 这个新的属性,在修改或获取时,按照我们自己定义的方式去访问(fullName). 其实跟firstName和lastName没有太大的关系,firstName和lastName依然可以随意的访问. 如果对象中每一个属性要都按照自己的要求去访问,那就把所有的属性,都改成getter和setter
+        */
+        var obj = {
+            firstName: "ha",
+            lastName: "he",
+            get fullName() {
+                return this.firstName + this.lastName
+            },
+            set fullName(val) {
+                var arr = val.split('-');
+                this.firstName = arr[0];
+                this.lastName = arr[1];
+            }
+        }
+
+        console.log(obj.firstName)
+        console.log(obj.lastName)
+        console.log(obj.fullName)
+        obj.fullName = "12-34"
+        console.log(obj)
+        console.log(obj.fullName)
+
+        var obj1 = {
+            name : "Bob",
+            age : 19,
+            get a(){
+                return 20
+            },
+            set b(val){
+                this.age = val
+            }
+        }
+        // obj.age = "nv"
+        console.log(obj1)
+        console.log(obj1.age)
+        obj1.b = 23;
+        console.log(obj1.b)
+    </script>
+</body>
+
+</html>

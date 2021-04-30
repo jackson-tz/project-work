@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function Father(name,age){
+            //实例属性
+            this.name = name;
+            this.age = age;
+        }
+        var son = new Father("Bob" , 19);
+        //静态属性
+        Father.test = "123";
+        //实例化对象可以访问实例属性，但不能访问静态属性
+        console.log(son.test)
+        console.log(son.name)
+    </script>
+</body>
+</html>

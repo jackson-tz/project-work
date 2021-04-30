@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /* 
+             生成器：function* fn(){
+                 yield "状态"
+             }
+                 - 定义时要在function后添加一个（*）
+                 - 生成器函数调用时返回得到一个对象，继承了iterator接口，并且函数内的代码不会立即执行，用一个变量（re）接收
+                 - 当调用re.next()，生成器中的代码就会执行，但是当碰到yield时，代码会延缓执行，然后会先去执行主线代码，当主线代码执行完毕后，返回执行yield后代码，将yield后面的值返回，然后执行yield之后的代码，直到又遇到yield，停止运行，再次调用next()方法时，会再次执行，依次类推
+        */
+        let { log } = console;
+        function* fn() {
+            log(2)
+            yield "执行第一次代码";
+            log(3)
+            yield "执行第二次代码";  
+            log(4)
+            yield "执行第三次代码";
+        }
+        var re = fn(); // 2
+        log(re.next()); // {value : "执行第一次代码" , done : false} 3
+        log(re.next()); // {value : "执行第二次代码" , done : false} 4
+        log(re.next()); // {value : "执行第三次代码" , done : true} 
+        log(re.next()); // {value : undefined , done : true} 
+        log(1) // 1
+    </script>
+</body>
+
+</html>

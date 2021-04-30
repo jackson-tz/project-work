@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let {log} = console
+        let arr = [1,2,3,4,5];
+        let newArr = [...arr];
+        console.log(newArr);
+
+        let arr1 = [1,2,3,4];
+        let arr2 = ["a","b","c"];
+        let newArr1 = [...arr1,...arr2];
+        console.log(newArr1);
+
+        let str = "acbdrsg";
+        let newArr2 = [...str];
+        log(newArr2);
+
+
+        var arr4 = [1,4,2,6,8,2,3,5,8,0,8,7]
+        function quick(arr4){
+            if(arr4.length<=1){
+                return arr4;
+            }
+            let left = [],right=[];
+            let center = arr4.pop();
+            arr4.forEach(function(item){
+                if(item <= center){
+                    left.push(item);
+                }else{
+                    right.push(item);
+                }
+            })
+            // let newArr = quick(left).concat(center,quick(right))
+            let newArr = [...quick(left),center,...quick(right)]
+
+            return newArr;
+        }
+
+        log(quick(arr4));
+
+    </script>
+</body>
+</html>

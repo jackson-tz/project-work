@@ -1,0 +1,23 @@
+1.创建项目
+2.初始化项目
+3.创建项目需要的一些文件夹
+   前端代码： public
+   服务器代码： server
+   模板代码：views
+   忽略文件： .gitignore
+4.下载资源包
+    express
+    mongoose
+    ejs
+
+--开始写前端代码
+5.在public文件夹中创建需要的文件夹
+    封装函数：lib
+    登录页面：login 分别创建 html文件、css文件、js文件
+    注册页面：register 分别创建 html文件、css文件、js文件
+
+--写服务器代码
+6.创建数据库，并且连接数据库
+    创建一个文件夹db（创建condb文件夹、model文件夹）
+    condb文件：写连接数据库的代码
+    model文件夹: 写创建model对象的代码

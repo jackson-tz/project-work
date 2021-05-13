@@ -19,10 +19,12 @@ router.post("/register", async (request,response)=>{
 router.post("/login",async (request,response)=>{
     const {userName,password} = request.body;
     const user = await loginUser(userName,password);
-    console.log(user)
     if(user){
+        // 添加cookie
+        response.cookie("userId",user._id,{maxAge:1000*60*10})
         // 重定向，跳转新的页面
-        response.redirect("http://127.0.0.1:5000/home")
+        // response.redirect("http://127.0.0.1:5000/home?_id=" + user._id)
+        response.redirect("http://127.0.0.1:5000/home/"+user._id)
     }else{
         response.send("登录失败，用户名或密码错误,<a href='http://127.0.0.1:5000/login/index.html'>点击返回到登录页面</a>")
     }

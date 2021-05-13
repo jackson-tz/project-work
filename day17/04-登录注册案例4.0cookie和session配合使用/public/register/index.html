@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+    <h1>用户注册界面</h1>
+    <form action="http://127.0.0.1:5000/register" method="POST">
+        用&nbsp; 户&nbsp;名：<input type="text" name="userName">
+        <span id="tip-userName"></span>
+        <br>
+        密　　码：<input type="password" name="password">
+        <span id="tip-password"></span>
+        <br>
+        确认密码：<input type="password" name="repassword">
+        <span id="tip-repassword"></span>
+        <br>
+        <input type="submit" value="登录">
+    </form>
+    <script src="../lib/func.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>

@@ -1,5 +1,7 @@
 // 引入express
 const express = require("express");
+// 引入md5加密插件
+const md5 = require("md5")
 // 引入操作数据库的函数
 const {loginUser} = require("../db/crud/login");
 const {registerUser} = require("../db/crud/register");
@@ -11,7 +13,9 @@ router.use(express.urlencoded({extended: true}));
 // 注册账户操作
 router.post("/register",async (request,response)=>{
     // 函数结构获取表单上传的数据
-    const {userName,password} = request.body;
+    let {userName,password} = request.body;
+    // 将密码加密
+    password = md5(password);
     // 调用该函数，向数据库中添加数据
     await registerUser(userName,password);
     // 响应请求
@@ -21,7 +25,9 @@ router.post("/register",async (request,response)=>{
 // 登录用户操作
 router.post("/login",async (request,response)=>{
     // 获取post请求上传的数据
-    const {userName,password} = request.body;
+    let {userName,password} = request.body;
+    // 将登录时的密码加密
+    password = md5(password)
     // 调用该函数，在数据库中查找是否有该数据
     let user = await loginUser(userName,password);
     // 

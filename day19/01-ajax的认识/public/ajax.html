@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" name="userName">
+    <span id="span"></span>
+    <button type="button" id="btn">点击</button>
+</body>
+<script>
+        let btn = document.querySelector("#btn")
+        btn.onclick = function(){
+            // 创建xhr对象
+            const xhr = new XMLHttpRequest();
+            // 设置请求方式
+            xhr.open("post","http://127.0.0.1:5000/xxx")
+            // 设置请求头
+            xhr.setRequestHeader(
+                "content-type", 
+                "application/x-www-form-urlencoded"
+            )
+            // 设置请求主题并发送请求
+            xhr.send("userName = zs & age = 18")
+
+            // 监听xhr.readyState的变化
+            xhr.onreadystatechange = function(){
+                if(xhr.readyState === 4){
+                    if(xhr.status === 200){
+                        console.log(xhr.responseText)
+                    }
+                }
+            }
+
+        }
+</script>
+
+</html>

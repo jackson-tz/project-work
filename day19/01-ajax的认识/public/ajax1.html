@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="input">
+    <span id="span"></span>
+    <script>
+        input.oninput = function(){
+            // 获取表单上输入的内容
+            const value = this.value;
+            // 创建一个xhr对象
+            const xhr = new XMLHttpRequest();
+            // 调用open方法，设置请求方式和请求的url地址
+            xhr.open("post","http://127.0.0.1:5000/xxx")
+            // 设置请求头,确定上传数据在请求主体中的格式，如果是get请求的话就可以不用设置，
+            xhr.setRequestHeader("content-type","application/x-www-form-urlencoded")
+            // 设置请求主体并发送请求,当发送请求的方式是get时，xhr.send(null)
+            // xhr.send("name=zs&age=18") (不能有空格)
+            xhr.send("name=" +value);
+            // 监听readyState的变化
+            xhr.onreadystatechange = function(){
+                // 判断请求是否完成
+                if(xhr.readyState === 4){
+                    // 判断请求是否成功
+                    if(xhr.status === 200){
+                        // 获取响应主体的内容
+                        console.log(xhr.responseText)
+                        span.textContent = xhr.responseText
+                        span.textContent === "可用"
+                        ? span.style.color = "green"
+                        : span.style.color = "red";
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

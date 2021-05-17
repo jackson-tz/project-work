@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 定义一个回调函数
+        function fn(data){
+            console.log(data);
+            return a = data;
+        };
+        // 创建一个script标签
+        const script = document.createElement("script");
+        // 给这个script标签添加一个属性scr
+        script.src = "http://127.0.0.1:5000/test?callback=fn";
+        // 将这个script标签插入到body中
+        document.body.appendChild(script);
+        // 代码不会出现阻塞
+        console.log(123);
+
+
+    </script>
+    <!-- 上面生成的script标签相当于插入到这个位置 -->
+    <!-- <script src="http://127.0.0.1:5000/test?callback=fn"> </script> -->
+    <!-- 生成的script标签get请求时会等到上一个script标签的代码全部解析完成 -->
+</body>
+</html>

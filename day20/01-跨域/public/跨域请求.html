@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 定义一个回调函数
+        function fn(data){
+            console.log(data)
+        }
+    </script>
+    <script src="http://127.0.0.1:5000/test?callBack=fn">
+    // 当script标签解析发出get请求服务器，服务器响应
+    // fn(data)
+    // 然后调用函数
+    // 上一个script标签中的函数被调用，执行函数里面的代码
+    </script>
+</body>
+</html>

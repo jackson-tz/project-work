@@ -1,5 +1,5 @@
 {
-  "name": "zcal3.0",
+  "name": "ajax_lianxi",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,10 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cookie-parser": "^1.4.5",
-    "ejs": "^3.1.6",
-    "express": "^4.17.1",
-    "md5": "^2.3.0",
-    "mongoose": "^5.12.8"
+    "express": "^4.17.1"
   }
 }

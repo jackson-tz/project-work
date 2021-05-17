@@ -1,10 +1,10 @@
-
 // 利用await判断数据库是否连接成功
 ;(async function(){
     // 引入express
     const express = require("express");
     // 引入cookie
     const cookieParser = require("cookie-parser");
+
     // 接收引入router
     const logicRouters = require("./router/logicRouters");
     const uiRouter = require("./router/uiRouter");

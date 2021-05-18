@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>React App</title>
+
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <div id="root">
+    <div class="todo-container">
+      <div class="todo-wrap">
+        <div class="todo-header">
+          <input type="text" placeholder="请输入你的任务名称，按回车键确认" id="addTodo" />
+        </div>
+        <h1 id="tip">恭喜你没有任务</h1>
+        <div id="container">
+          <ul class="todo-main">
+            <!-- <li>
+              <label>
+                <input type="checkbox" />
+                <span>xxxxx</span>
+              </label>
+              <button class="btn btn-danger">删除</button>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" />
+                <span>yyyy</span>
+              </label>
+              <button class="btn btn-danger">删除</button>
+            </li> -->
+          </ul>
+          <div class="todo-footer">
+            <!-- <label>
+              <input type="checkbox" />
+            </label>
+            <span> <span>已完成0</span> / 全部2 </span>
+            <button class="btn btn-danger">清除已完成任务</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 获取需要的元素
+    const oTip = document.getElementById("tip");
+    const oContainer = document.getElementById("container");
+    const o_todo_main = document.querySelector(".todo-main");
+    const o_todo_footer = document.querySelector(".todo-footer");
+    const oAddTodoInput = document.getElementById("addTodo");
+    let allCheckedBtn;
+    let deleteAllDone;
+    // 根据得到的数据渲染页面
+    function render(todoList) {
+      // 判断是否有数据，有则将数据动态添加在todo-main上，并渲染在页面上，没有则，隐藏container，展示tip
+      if (todoList.length === 0) {
+        oTip.style.display = "block";
+        oContainer.style.display = "none";
+        return;
+      } else {
+        oTip.style.display = "none";
+        oContainer.style.display = "block";
+      }
+
+      // 当有数据时，利用模板字符串拼接将数据渲染在页面上
+      // 获取数据中所有的任务的任务名
+      // 渲染列表
+      const arrList = todoList.reduce((preArr, item, index) => {
+        preArr.push(`
+            <li>
+              <label>
+                <input type="checkbox" ${item.isDone === "true" ? "checked" : ''} id=${item._id}>
+                <span>${item.todoName}</span>
+              </label>
+              <button class="btn btn-danger" id=${item._id}>删除</button>
+            </li>
+        `)
+        return preArr;
+      }, [])
+
+      // 渲染底部
+      // 获取任务的总个数
+      // 获取完成的人无的个数
+      const todoListCount = todoList.length;
+      let doneTotalCount = 0;
+      todoList.forEach((item, index) => {
+        if (item.isDone === "true"){
+          doneTotalCount++
+        };
+      })
+      let footer = `
+            <label>
+              <input type="checkbox" ${doneTotalCount === todoListCount ? "checked" : ""}/>
+            </label>
+            <span> <span>已完成${doneTotalCount}</span> / 全部${todoListCount} </span>
+            <button class="btn btn-danger">清除已完成任务</button>`
+
+      // 将数据插入到todo-main和todo-footer上
+      o_todo_main.innerHTML = arrList.join('');
+      o_todo_footer.innerHTML = footer;
+
+      allCheckedBtn = document.querySelector(".todo-footer input")
+      allCheckedBtn.onclick = allCheckedBtnFn;
+      deleteAllDone = document.querySelector(".todo-footer .btn")
+      deleteAllDone.onclick = deleteAllDoneFn;
+
+    }
+
+    function getTodoList(todoList) {
+      // 获取到数据库中的内容
+      console.log(todoList);
+      render(todoList)
+    }
+    // 创建一个script标签，利用script不受同源作用的影响，来获取数据库中的所有的数据
+    const script = document.createElement("script");
+    // 给script的src属性赋值一个要请求的服务器的url地址
+    script.src = "http://127.0.0.1:5000/findTodo?callback=getTodoList"
+    // 将这个script标签渲染到页面上
+    document.body.appendChild(script);
+
+    // 封装一个自己的ajax请求服务器的函数
+    function myAjaxPost(options) {
+      return new Promise((resolve, reject) => {
+        // 结构上传的参数
+        let { url, data } = options
+        // 判断是否写有url
+        // if (!url) return;
+        const xhr = new XMLHttpRequest();
+        // 设置请求方式和请求的地址
+        xhr.open("post", url);
+        // 设置请求头
+        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        let params = obj2str(data)
+        // 发出请求
+        xhr.send(params);
+        // 监听readyState的变化
+        xhr.onreadystatechange = function () {
+          // 判断请求是否完成并且成功
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            console.log(JSON.parse(xhr.responseText))
+            resolve(JSON.parse(xhr.responseText))
+          }
+        }
+      })
+    }
+
+    // function 
+    function obj2str(data){
+      if(!data && Object.prototype.toString.call(data).slice(8,-1).toLowerCase() !== "object") return;
+      let arr = [];
+      for(let key in data){
+        arr.push(`${key}=${data[key]}`)
+      }
+      return arr.join('&');
+    }
+
+
+    // 当按下回车键添加具体的数据的操作
+    oAddTodoInput.onkeyup = async function(e){
+      if(e.keyCode === 13){
+        // 获取输入框中的内容，并且去掉两边的空格
+        let value = this.value.trim()
+        // 判断是否输入内容
+        if(!value) return this.value = "";
+        // 清空输入框
+        this.value = "";
+        // 如果有内容，则调用ajax函数，添加数据
+        const todoList = await myAjaxPost({
+          url: "http://127.0.0.1:5000/addTodo",
+          data: {
+            todoName: value,
+          },
+        });
+        // 添加数据后，数据发生改变，需要把改变后的数据动态的渲染到页面上
+        render(todoList)
+      }
+    }
+
+    // 更改数据的具体操作
+    // 利用事件委托绑定点击事件
+    o_todo_main.onclick = async function(e){
+      // 判断点击的目标元素
+      console.log(e.target.tagName.toLowerCase())
+      if(e.target.tagName.toLowerCase() === "input"){
+        // 获取对应任务项的id
+        let ids = e.target.id;
+        ids = [ids];
+        // console.log(ids)
+        // 获取对应任务项的状态
+        const checked = e.target.checked;
+        // console.log(checked)
+        // 调用myAjaxPost函数更新数据
+        const todoList = await myAjaxPost({
+          url: "http://127.0.0.1:5000/updateTodos",
+          data: {
+            ids: JSON.stringify(ids),
+            isDone: checked,
+          },
+        });
+        // 更新数据，数据库的数据发生改变，需要重新将数据渲染到页面上
+        render(todoList);
+      }
+    }
+
+    // 点击删除数据具体操作
+    // addEventListener()方法可是给同一个元素绑定多个事件
+    o_todo_main.addEventListener("click",async (e)=>{
+      // console.log(e.target.className === "btn btn-danger")
+      if(e.target.className === "btn btn-danger"){
+        // 获取相对应的任务的id和状态
+        let ids = [e.target.id];
+        // 调用myAjaxPost()方法，进行删减数据的操作
+        const todoList = await myAjaxPost({
+          url: "http://127.0.0.1:5000/deleteTodos",
+          data: {
+            ids: JSON.stringify(ids),
+          },
+        });
+        // 由于删减了数据，数据发生改变，所以要把改变后的数据熏染到页面上
+        render(todoList);
+      }
+    })
+
+    // 点击全选按钮，选中时所有任务处于完成状态，反之则全部处于未完成状态
+    async function allCheckedBtnFn(){
+      // 获取状态
+      let checked = this.checked
+      // 获取所有的任务项
+      let inputs = document.querySelectorAll(".todo-main li input");
+      // 将伪数组转化位数组
+      inputs = Array.from(inputs);
+      // 获取所有的任务项的id
+      const ids = inputs.reduce((preArr,item,index)=>{
+        preArr.push(item.id)
+        return preArr;
+      },[])
+      // 调用myAjaxPost()方法，对数据进行更改
+      const todoList = await myAjaxPost({
+        url: "http://127.0.0.1:5000/updateTodos",
+        data: {
+           ids: JSON.stringify(ids),
+           isDone: checked,
+        },
+      })
+      // 由于数据发生改变，需要重新渲染页面
+      render(todoList);
+    }
+    
+    // 点击清除已完成按钮，删除已经完成的任务
+    async function deleteAllDoneFn(){
+      // 获取所有的任务项
+      let inputs = document.querySelectorAll(".todo-main li input");
+      // 将伪数组转化位数组
+      inputs = Array.from(inputs);
+      // 获取所有的任务项的id
+      const ids = inputs.reduce((preArr,item,index)=>{
+        if(item.checked === true){
+        preArr.push(item.id)
+        }
+        return preArr;
+      },[])
+      // 调用myAjaxPost()方法操作数据
+      const todoList = await myAjaxPost({
+        url: "http://127.0.0.1:5000/deleteTodos",
+        data: {
+          ids: JSON.stringify(ids),
+        },
+      });
+       // 由于数据发生改变，需要重新渲染页面
+       render(todoList);
+    }
+  </script>
+</body>
+
+</html>

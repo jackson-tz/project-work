@@ -1,0 +1,24 @@
+1.查找接口
+    请求地址(url)：http://127.0.0.1:5000/findTodo
+    请求方式：GET
+    请求参数(query params)：无
+    响应数据格式：[{},{}]/[]
+
+2.添加接口
+    请求地址(url)：http://127.0.0.1:5000/addTodo
+    请求方式：POST
+    请求参数(body)：todoName(String): 任务名
+    响应数据格式：
+
+3.更新接口
+    请求地址(url)：http://127.0.0.1:5000/updateTodos
+    请求方式：POST
+    请求参数(body)：ids([{String},{String}]): 更改数据任务的id 
+                    isDone: 要把数据改成什么状态
+    响应数据格式：[{},{}]/[]
+
+4.删除接口
+    请求地址(url)：http://127.0.0.1:5000/deleteTodos
+    请求方式：POST
+    请求参数(body)：ids([{String},{String}]): 删除数据的id
+    响应数据格式：[{},{}]/[]

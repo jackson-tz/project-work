@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>React App</title>
+
+  <link rel="stylesheet" href="index.css" />
+</head>
+
+<body>
+  <div id="root">
+    <div class="todo-container">
+      <div class="todo-wrap">
+        <div class="todo-header">
+          <input type="text" placeholder="请输入你的任务名称，按回车键确认" id="addTodo" />
+        </div>
+        <h1 id="tip">恭喜你没有任务</h1>
+        <div id="container">
+          <ul class="todo-main">
+            <!-- <li>
+              <label>
+                <input type="checkbox" />
+                <span>xxxxx</span>
+              </label>
+              <button class="btn btn-danger">删除</button>
+            </li>
+            <li>
+              <label>
+                <input type="checkbox" />
+                <span>yyyy</span>
+              </label>
+              <button class="btn btn-danger">删除</button>
+            </li> -->
+          </ul>
+          <div class="todo-footer">
+            <label>
+              <input type="checkbox" />
+            </label>
+            <span> <span>已完成0</span> / 全部2 </span>
+            <button class="btn btn-danger">清除已完成任务</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // 获取元素
+    const oTip = document.getElementById("tip");
+    const oContainer = document.getElementById("container");
+    const o_todo_main = document.querySelector(".todo-main");
+    const o_todo_footer = document.querySelector(".todo-footer");
+    const oAddTodoInput = document.getElementById("addTodo");
+    let allCheckedBtn;
+    let deleteAllDone;
+
+    function render(todoList) {
+      // 1.判断todoList有没有数据，如果有，就渲染一下数据，如果没有就提示没有任务
+      if (todoList.length === 0) {
+        // 如果没有数据
+        oTip.style.display = "block";
+        oContainer.style.display = "none";
+        return;
+      } else {
+        // 如果有数据
+        oTip.style.display = "none";
+        oContainer.style.display = "block";
+      }
+
+      // 渲染列表
+      const arrList = todoList.reduce((preArr, item, index) => {
+        preArr.push(
+          `<li>
+                <label>
+                  <input type="checkbox" ${item.isDone === 'true' ? 'checked' : ''}
+                  id=${item._id}>
+                  <span>${item.todoName}</span>
+                </label>
+                <button class="btn btn-danger" id=${item._id}>
+                  删除
+                </button>
+              </li>`
+        )
+        return preArr;
+      }, [])
+
+      // 渲染底部
+      // 要计算全选是否要选中
+      // 计算任务列表的长度
+      const totalListCount = todoList.length;
+      let DoneTotalCount = 0;
+      todoList.forEach((item) => {
+        if (item.isDone === 'true') {
+          DoneTotalCount++
+        }
+      })
+
+      let footer = `
+              <label>
+                <input type="checkbox" ${totalListCount === DoneTotalCount ? 'checked' : ''
+        } />
+              </label>
+              <span> <span>已完成${DoneTotalCount}</span> / 全部${totalListCount} </span>
+              <button class="btn btn-danger">清除已完成任务</button>`
+      o_todo_main.innerHTML = arrList.join('')
+      o_todo_footer.innerHTML = footer
+
+      allCheckedBtn = document.querySelector(".todo-footer input");
+      allCheckedBtn.onclick = allCheckboxFn;
+      deleteAllDone = document.querySelector(".todo-footer .btn-danger");
+      deleteAllDone.onclick = deleteAllDoneFn;
+    }
+
+    function getTodoList(todoList) {
+      console.log(todoList)
+      render(todoList)
+    };
+
+    const script = document.createElement("script");
+    script.src = "http://127.0.0.1:5000/findTodo?callback=getTodoList"
+    document.body.appendChild(script);
+
+    // 定义一个自己的ajax异步请求服务器的函数
+    function myAjax(options) {
+      return new Promise((resolve, reject) => {
+        const { url, data, success } = options
+        const xhr = new XMLHttpRequest();
+        xhr.open("post", url);
+        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
+        let params = obj2str(data);
+        xhr.send(params);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            resolve(JSON.parse(xhr.responseText));
+          }
+        }
+      })
+    }
+    
+    // myAjaxPost发送请求的参数,是{键: 值, 键:值}.希望转成"键=值&键=值".所以还是封装函数
+    function obj2str(data) {
+      let arr = [];
+      for (let key in data) {
+        arr.push(`${key}=${data[key]}`)
+      }
+      return arr.join("&");
+    }
+
+    // 具体新增数据的逻辑
+    oAddTodoInput.onkeyup = async function (e) {
+      if (e.keyCode === 13) {
+        // 获取传入是的数据
+        let value = this.value.trim();
+        // 判断是否传入数据
+        if (!value) return this.value = "";
+        // 清空表单
+        this.value = "";
+        const todoList = await myAjax({
+          url: "http://127.0.0.1:5000/addTodo",
+          data: {
+            todoName: value,
+          },
+        })
+        render(todoList);
+      }
+    }
+
+    // 修改的逻辑
+    // 任务事件委托
+    o_todo_main.onclick = async function (e) {
+      // 找到事件目标 e.target
+      if (e.target.tagName.toLowerCase() === "input") {
+        // 修改数据库中的数据
+        // console.log(e.target.id)
+        // 获取多选框的状态
+        const checked = e.target.checked;
+        // 获取点击的多选框的id
+        let ids = e.target.id;
+        ids = [ids];
+        const todoList = await myAjax({
+          url: "http://127.0.0.1:5000/updateTodos",
+          data: {
+            isDone: checked,
+            // ids要以数组的字符串形式传参
+            ids: JSON.stringify(ids),
+          }
+        });
+        console.log(todoList)
+        // 数据修改成功后重新渲染一下页面
+        render(todoList)
+      }
+    }
+
+    // 全选的  
+    async function allCheckboxFn() {
+      const checked = this.checked;
+      let inputs = document.querySelectorAll(".todo-main li input");
+      // inputs是一个伪数组，为了使用数组的方法，将一个伪数组转为数组
+      inputs = Array.from(inputs);
+      let ids = inputs.map((item) => {
+        return item.id
+      });
+      const todoList = await myAjax({
+        url: "http://127.0.0.1:5000/updateTodos",
+        data: {
+          isDone: checked,
+          ids: JSON.stringify(ids),
+        }
+      })
+      render(todoList);
+    }
+
+    // 删除的逻辑
+    o_todo_main.addEventListener("click", async function (e) {
+      if (e.target.className === "btn btn-danger") {
+        let todoList = await myAjax({
+          url: "http://127.0.0.1:5000/deleteTodos",
+          data: {
+            ids: JSON.stringify(e.target.id),
+          },
+        })
+        render(todoList);
+      }
+    })
+
+    // 点击清空所有完成项的逻辑
+    async function deleteAllDoneFn(e){
+      console.log(e.target)
+      // 获取所有完成的任务项
+      let inputs = document.querySelectorAll(".todo-main li input");
+      // 将伪数组转换为数组
+      inputs = Array.from(inputs);
+      // 遍历数组，获取到完成的任务项的id
+      let ids = inputs.reduce((preArr,item,index)=>{
+        if(item.checked === true){
+          preArr.push(item.id)
+        }
+        return preArr;
+      },[])
+      // console.log(ids)
+      // 将ids装换位json的字符串的形式
+      ids = JSON.stringify(ids);
+      // 利用ajax发送异步请求
+      const todoList = await myAjax({
+        url: "http://127.0.0.1:5000/deleteTodos",
+        data: {
+          ids: ids,
+        }
+      });
+      render(todoList);
+    }
+
+  </script>
+</body>
+
+</html>

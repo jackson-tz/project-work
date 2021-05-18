@@ -15,6 +15,7 @@ router.get('/findTodo',async (req,res)=>{
     const todoStr = JSON.stringify(todoList);
     // 利用字符串模板拼接
     const cbStr = `${callback}(${todoStr})`
+    // console.log(cbStr)
     res.send(cbStr)
 })
 

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // Object.create的作用,用来创建一个对象
+      // 两个参数:
+      // 第一个参数: 创建出来的实例的原型对象 可以写null .如果写null,实例的原型就是undefined
+      // 第二个参数: 是对象中属性的一些描述信息:
+      /*{
+        属性: {
+            value: 这个属性的值
+            writeable: 属性是否可以设置
+            enumerable: 属性是否可以遍历
+            configurable: 属性是否可以删除
+        }   
+        属性:{
+            value: '值'
+            其他属性没有写,默认false
+        }
+      }*/
+
+      const obj = Object.create(Object.prototype,{
+        name:{
+          value: "Bob", // 属性的值
+          writable: true, // 是否可写(设置)
+          enumerable: true, // 属性是否可以遍历
+          configurable: true, // 属性是否删除
+        },
+        age:{
+          value: 18, 
+          // writable: false,
+          // enumerable: false,
+          // configurable: false,
+        } 
+      })
+
+      console.log(obj) // {name: "Bob", age: 18}
+      for(let key in obj){
+        console.log(key) // name
+      }
+
+      obj.age = 20;// 设置不了
+      console.log(obj.age) // 18
+
+      delete obj.age
+      delete obj.name
+      console.log(obj)// 只有name属性被删除了
+
+      let arr = [1,2,3,4]
+
+      let obj1 = Object.create(obj);
+      console.log(obj1.age) // 创建了一个对象 会继承父辈的属性及方法
+    </script>
+  </body>
+</html>

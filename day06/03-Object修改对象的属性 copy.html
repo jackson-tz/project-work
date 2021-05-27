@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 修改一个已有的对象的属性
+      // 修改一个属性 Object.defineproperty(对象,要修改的属性,怎样修改(value、writable、enumerable、configurable))
+
+      let obj = {
+        name: "Bob",
+        age: 19,
+        sex: "男",
+      };
+      Object.defineProperty(obj,"name",{
+        value: "Tom",
+        writable: true,
+        enumerable: true,
+        configurable: true,
+      });
+      console.log(obj);
+
+      // 修改多个属性利用Object.definePropertys(要改属性的对象,{属性名：{}, 属性名：{}...})
+      Object.defineProperties(obj,{
+        name:{
+          value: "Bob",
+          writable: true,
+          enumerable: true,
+          configurable: true,
+        },
+        age:{
+          value: 18,
+          enumerable: false,
+          writable: false,
+          configurable: false,
+        }
+      });
+
+      console.log(obj);
+      for(let key in obj){
+        console.log(key);
+      };
+      obj.age = 21;
+      console.log(obj.age);
+      delete obj.age;
+      console.log(obj);
+
+
+
+
+    </script>
+  </body>
+</html>

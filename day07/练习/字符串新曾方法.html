@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // --去除字符串的空格
+        let str1 = "   123   "
+        console.log(str1) // "   123   "
+        // 1.去除字符串两端的空格 trim()
+        console.log(str1.trim()) // "123"
+        // 2.去除字符串开头的空格
+        console.log(str1.trimStart()) // "123   "
+        // 3.去除字符串结尾的空格
+        console.log(str1.trimEnd())// "   123"
+
+        // --判断字符串
+        let str2 = "123456789abcdefg"
+        console.log(str2);
+        // 1.判断字符串是否以什么开头
+        console.log(str2.startsWith("123")) // true
+        console.log(str2.startsWith("234")) // false  
+        // 2.判断字符串是否以什么结尾
+        console.log(str2.endsWith("efg")) // true
+        // 3.判断字符串是否含有什么字符  
+        console.log(str2.includes("abc")) // true
+        console.log(str2.includes("ac")) // false
+
+        // --repeat方法，重复一个字符串多次，并返回一个新的字符串
+        let str3 = "1";
+        console.log(str3.repeat("10")); // 1111111111
+
+        // --填充
+        let str4 = "12345678";
+        console.log(str4)
+        // 往字符串的前面填充 str.padStart(长度，"要填充的字符")
+        // 当字符串的长度比设置的长度小时，剩余的长度由设置的填充的字符填补
+        console.log(str4.padStart(10,"#"));
+        console.log(str4.padEnd(10,"*"));
+        
+    
+
+
+    </script>
+</body>
+</html>

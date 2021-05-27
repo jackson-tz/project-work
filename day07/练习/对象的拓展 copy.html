@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 对象的属性可以简写：当属性名和值相同时name：name => name   当属性值为函数时do: function(){} => do(){}
+        let name = "Bob";
+        let age = 19;
+        let obj = {
+            name,
+            age,
+            do(){
+                console.log("do方法")
+            }
+        }
+        console.log(obj);
+        obj.do();
+
+        let a = ()=>{
+            console.log("123")
+            return "123"
+        };
+        //字面量对象时，属性可以动态设置
+        // 在中括号中可以写表达式
+        let obj1 = {
+            [name]: "Bob",
+            ["age"+age]: 20,
+            [a()]: "do"
+        };
+        console.log(obj1)
+        
+        // Object.is：方法，可以判断NaN是否相等,也可以判断Infinity是否相等
+        console.log(Object.is(NaN , NaN)) // true
+        console.log(Object.is(1,1)) // true
+        console.log(Object.is({},{})) // false
+        console.log(Object.is([],[])) // false
+        console.log(Object.is(Infinity,Infinity)) // true
+        console.log(Object.is(Infinity,-Infinity)) // false
+        console.log(NaN === NaN) // false
+
+        // 合并方法；Object.assign 可以合并多个对象，并形成一个新的对象，并且这个新的对象拥有其它对象的所有的属性和方法
+        let newObj = Object.assign(obj,obj1);
+        console.log(newObj);
+        
+    </script>
+</body>
+</html>

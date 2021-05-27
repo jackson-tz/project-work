@@ -25,25 +25,23 @@
 
         var arr4 = [1,4,2,6,8,2,3,5,8,0,8,7]
         function quick(arr4){
-            if(arr4.length<=1){
-                return arr4;
-            }
-            let left = [],right=[];
+            if(arr4.length <= 1){
+                return arr4
+            };
             let center = arr4.pop();
-            arr4.forEach(function(item){
+            let left = [];
+            let right = [];
+            arr4.forEach((item,index)=>{
                 if(item <= center){
                     left.push(item);
                 }else{
-                    right.push(item);
+                    right.push(item)
                 }
             })
-            // let newArr = quick(left).concat(center,quick(right))
             let newArr = [...quick(left),center,...quick(right)]
-
             return newArr;
         }
-
-        log(quick(arr4));
+        log(quick(arr4));   
 
     </script>
 </body>

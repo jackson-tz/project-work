@@ -1,0 +1,33 @@
+--local Storage 是浏览器端的技术，node没有
+    1.存储数据
+        localStorage.setItem('键'，'值')
+        例：localStorage.setItem('test',JSON.Stringify([1,2,3]))
+        注意：只能存储字符串
+        解决：将一个数组、对象转成json字符串存进去，用的时候拿出来，还是json字符串。再转成js对象即可
+    2.取数据
+        localStorage.getItem('键')返回对应的值
+        例：localStorage.getItem('test')
+
+--模块化
+    AMD：依赖前置（异步）依赖的库：require.js
+    CMD：依赖就近 (异步和同步都有) 依赖的库：sea.js
+
+    commonJS在浏览器中使用
+        1.下载包browserify（全局和本地都下载一次）
+            全局下载：npm i browserify -g
+            本地下载：npm i browserify --save-dev
+        2.module.exports导出
+        3.require导入
+        4.要想在浏览器中使用：
+            1）：node中打包处理js：browserify (要使用的js的当前路径) -o (要使用js的html文件的路径)
+                    例：browserify ./app.js -o ./bundle.js  (bundle.js是编译后生成js文件，html引入该文件使用，每次更改代码后都要重新编译一次)
+            2）：页面引入：<script type="text/javascript" src="./bunsle.js"></script>
+
+    ES6模块化的使用
+        1.下载资源包：babel-cli、babel-preset-es2015、browserify
+            npm install babel-cli browserify -g
+            npm i babel-preset-es2015 --save-dev 
+            注意：preset预设（将es6转换成es5的所有插件打包）
+        2.定义 .babelrc 文件 {"preset"：["es2015"]}
+        2.统一导出利用export{ fn , arr }
+        3.统一导入利用import{ fn , arr } from '/路径'

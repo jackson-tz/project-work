@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    //需求: 将一个数组中的值,存储到一个对象里面
+    //   var arr = ['a','b','c'] =转成一个对象=> {a:0, b:1, c:2}
+    let arr = ['a', 'b', 'c'];
+    // 利用数组的reduce()的方法
+    // arr.reduce((pre,item,index)=>{},intervalue) 
+    // 1.数组有几个元素就会被调用几次
+    // 2.函数第一次调用的时候就会把intervalue赋值给pre
+    // 3.item是数组的每个元素
+    // 4.index表示的对应元素的下标
+    // 每次调用后return，return返回的值为下一次函数调用的pre的值
+    const obj = arr.reduce((perObj,item,index)=>{
+      perObj[item] = index;
+      return perObj;
+    },{});
+    console.log(obj);
+    
+  </script>
+</body>
+
+</html>
